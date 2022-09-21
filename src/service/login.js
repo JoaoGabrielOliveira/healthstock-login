@@ -1,4 +1,4 @@
-import getUsuario from "../repository/user.js";
+import getUser from "../repository/user.js";
 
 //Export default é para exportar a função em outros arquivos.
 //Função para logar
@@ -6,26 +6,26 @@ export default function Login(req, res, next) {
     let loginBody = req.body;
 
     let email = loginBody.email;
-    let senha = loginBody.senha;
+    let password = loginBody.password;
 
     if(!email) {
-        res.send("Você não mandou o email!");
+        res.status(401).send({error:"Email não foi enviado na requisição!"});
         return;
     }
 
-    if(!senha) {
-        res.send("Você não mandou o senha!");
+    if(!password) {
+        res.status(401).send({error:"Senha não foi enviado na requisição!"});
         return;
     }
 
-    let usuario = getUsuario(email);
+    let user = getUser(email);
 
-    if(!usuario){
-        res.send("Usuario não existe");
+    if(!user){
+        res.status(401).send({error:"Usuario não existe!"});
         return;
     }
     
-    res.send(usuario);
+    res.status(202).send(user);
     next();
 }
 

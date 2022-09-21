@@ -16,8 +16,8 @@ app.get("/login", (req, res) => {
         email: "joao@gmail.com", senha: "12345678"
     });
     loginResponse.then( (response) => {
-        let usuario = response.data;
-        
+        let user = response.data;
+
     }).catch((err) => console.error(err))
 
     res.send("Tudo numa boa")

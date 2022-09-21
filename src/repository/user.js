@@ -1,8 +1,8 @@
 
-var usuarios = [
-    {email: "joao@gmail.com", senha:"12345678"}
+var user = [
+    {email: "joao@gmail.com", password:"12345678"}
 ]
 
-export default function getUsuario(email){
-    return usuarios.find((value) => value.email == email);
+export default function getUser(email){
+    return user.find((value) => value.email == email);
 }
