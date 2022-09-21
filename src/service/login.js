@@ -19,10 +19,13 @@ export default function Login(req, res, next) {
     }
 
     let user = getUser(email);
-
     if(!user){
-        res.status(401).send({error:"Usuario não existe!"});
+        res.status(401).send({error:"Email não encontrado!"});
         return;
+    }
+
+    if(user.password != password){
+        res.status(401).send({error:"Senha está incorreta!"});
     }
     
     res.status(202).send(user);
