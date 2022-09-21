@@ -1,0 +1,30 @@
+{
+  "name": "healthstock-login",
+  "version": "1.0.0",
+  "description": "Microsserviço de login para aplicação HealthStock",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/JoaoGabrielOliveira/healthstock-login.git"
+  },
+  "keywords": [
+    "login",
+    "auth",
+    "service",
+    "microsservices"
+  ],
+  "author": "HealthStock",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JoaoGabrielOliveira/healthstock-login/issues"
+  },
+  "homepage": "https://github.com/JoaoGabrielOliveira/healthstock-login#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1"
+  }
+}
