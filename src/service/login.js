@@ -18,18 +18,26 @@ export default function Login(req, res, next) {
         return;
     }
 
-    let user = getUser(email);
-    if(!user){
-        res.status(401).send({error:"Email não encontrado!"});
-        return;
-    }
+    let userPromise = getUser(email);
 
-    if(user.password != password){
-        res.status(401).send({error:"Senha está incorreta!"});
-    }
+    userPromise.then((user) => {
+        if(!user){
+            res.status(401).send({error:"Email não encontrado!"});
+            return;
+        }
     
-    res.status(202).send(user);
-    next();
+        if(user.password != password){
+            res.status(401).send({error:"Senha está incorreta!"});
+        }
+
+        res.status(202).send(user);
+    }).catch((err) => {
+        
+        res.status(500).send({message: "Aconteceu um erro inesperado", error: err})
+        console.error(err);
+    }).finally(() => {
+        next();
+    })
 }
 
 // Função para deslogar
