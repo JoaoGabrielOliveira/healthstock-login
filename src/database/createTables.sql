@@ -37,3 +37,9 @@ CREATE TABLE contacts (
     name VARCHAR(100) NOT NULL,
     details VARCHAR(100) NOT NULL
 )
+
+-- Codigo para inserir um dado no banco
+INSERT INTO users (email, password) VALUES ('joao@gmail.com', '12345678')
+
+-- Codigo para ver todos dados da tabela users
+SELECT * FROM users;
