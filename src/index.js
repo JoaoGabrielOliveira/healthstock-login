@@ -34,18 +34,27 @@ var dataSource = new typeorm.DataSource({
     database: "database/database.sqlite",
     logger: true,
     entities: [
-      "models/*.js"
-    ]
+      "src/models/*.js"
+    ],
+    synchronize: true
 }); 
 
 
 dataSource.initialize()
-.then(() => {
-    console.log("Banco de dados foi iniciado com sucesso!")
+    .then(() => {
+        console.log("Banco de dados foi iniciado com sucesso!");
+
+        console.log("Criando um usuario falso para testes");
+
+        //Codigo para salvar algum usuario no banco de dados
+        //let user = new User("joao@gmail.com", "12345678")
+        /*user.save()
+            .then( () => console.info("Usuario foi criado com sucesso!"))
+            .catch( (err) => console.error(err));*/
 })
-.catch((err) => {
-    console.error("Aconteceu um erro ao inciar banco de dados", err)
-});
+    .catch((err) => {
+        console.error("Aconteceu um erro ao inciar banco de dados", err)
+    });
 
 app.listen(PORT, () => {
     console.log("Iniciando HealthStock Login");
