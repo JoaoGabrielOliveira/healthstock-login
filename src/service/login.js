@@ -30,6 +30,8 @@ export default function Login(req, res, next) {
             res.status(401).send({error:"Senha está incorreta!"});
         }
 
+        delete user.password;
+
         res.status(202).send(user);
     }).catch((err) => {
         
@@ -39,9 +41,3 @@ export default function Login(req, res, next) {
         next();
     })
 }
-
-// Função para deslogar
-export function Logout(req, res, next) {
-
-}
-
