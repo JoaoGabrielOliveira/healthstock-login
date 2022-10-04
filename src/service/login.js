@@ -17,9 +17,10 @@ export default async function Login(req, res, next) {
         res.status(401).send({error:"Senha não foi enviado na requisição!"});
         return;
     }
-
+    let user;
     try {
-        let user = await User.findBy({email: email});
+        user = await User.findOneBy({email: email});
+        
 
         if(!user){
             res.status(401).send({error:"Email não encontrado!"});
@@ -27,6 +28,7 @@ export default async function Login(req, res, next) {
         }
 
         let checkPass = await checkPassword(password, user.password);
+        console.log(password,user.password)
 
         if(!checkPass){
             res.status(401).send({error:"Senha está incorreta!"});
@@ -37,7 +39,7 @@ export default async function Login(req, res, next) {
 
         res.status(202).send(user);
     } catch (err) {
-        res.status(500).send({message: "Aconteceu um erro inesperado", error: err.message})        
+        res.status(500).send({message: "Aconteceu um erro inesperado", error: err.message});
     }
     finally{
         next();
