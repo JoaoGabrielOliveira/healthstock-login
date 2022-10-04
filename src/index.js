@@ -13,6 +13,12 @@ app.use(express.json());
 
 app.post("/login", Login);
 
+app.post("/users/", saveUser );
+app.get("/users", getAllUser );
+app.get("/users/:id", getUser );
+app.put("/users", updateUser);
+app.delete("/users/:id", deleteUser );
+
 StartDatabase();
 
 app.listen(PORT, () => {
