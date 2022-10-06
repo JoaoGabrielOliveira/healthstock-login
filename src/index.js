@@ -1,5 +1,6 @@
 import express from "express";
 import "reflect-metadata";
+import cors from 'cors';
 
 import { StartDatabase, enviroment as env } from "./config/index.js";
 import router from './routes.js';
@@ -9,6 +10,9 @@ import router from './routes.js';
 //const express = require("express");
 const app = express();
 
+app.use(cors({
+    origin: '*'
+}));
 app.use(express.json());
 app.use('/', router);
 
