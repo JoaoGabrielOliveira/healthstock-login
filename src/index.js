@@ -14,6 +14,7 @@ app.use(cors({
     origin: '*'
 }));
 app.use(express.json());
+app.get('/', (req,res) => res.status(200).send({"message":"The service is working"}))
 app.use('/', router);
 
 StartDatabase();
