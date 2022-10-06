@@ -33,4 +33,4 @@ export const Schema = new EntitySchema({
             type: "varchar"
         }
     }
-})
+)
