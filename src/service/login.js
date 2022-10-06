@@ -28,7 +28,6 @@ export default async function Login(req, res, next) {
         }
 
         let checkPass = await checkPassword(password, user.password);
-        console.log(password,user.password)
 
         if(!checkPass){
             res.status(401).send({error:"Senha está incorreta!"});
