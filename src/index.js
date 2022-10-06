@@ -1,6 +1,6 @@
 import express from "express";
 import Login from "./service/login.js"
-import { PORT, DataSource, StartDatabase } from "./Config.js";
+import { StartDatabase, enviroment as env } from "./config/index.js";
 
 import "reflect-metadata";
 import { getUser, getAllUser, deleteUser, saveUser, updateUser } from "./service/user.js";
@@ -21,6 +21,6 @@ app.delete("/users/:id", deleteUser );
 
 StartDatabase();
 
-app.listen(PORT, () => {
-    console.log("Iniciando HealthStock Login: ", `http://localhost:${PORT}`);
+app.listen(env.PORT, () => {
+    console.log("Iniciando HealthStock Login: ", `http://localhost:${env.PORT}`);
 })
