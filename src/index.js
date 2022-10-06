@@ -18,6 +18,6 @@ app.use('/', router);
 
 StartDatabase();
 
-app.listen(env.PORT, () => {
-    console.log("Iniciando HealthStock Login: ", `http://localhost:${env.PORT}`);
+app.listen(env.PORT, env.HOST, () => {
+    console.log("Iniciando HealthStock Login: ", `http://${env.HOST}:${env.PORT}`);
 })
