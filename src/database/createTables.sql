@@ -31,6 +31,13 @@ CREATE TABLE addresses (
     complement VARCHAR(100)
 )
 
+CREATE TABLE buyers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_user INT NOT NULL,
+    cnpj INT(14) NOT NULL,
+    deliveryAddressId VARCHAR(100) NOT NULL,
+)
+
 CREATE TABLE contacts (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     responsible_area VARCHAR(40) NOT NULL,
