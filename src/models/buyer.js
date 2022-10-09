@@ -32,5 +32,4 @@ export const Schema = new EntitySchema({
         deliveryAddressId: {
             type: "varchar"
         }
-    }
-})
+    })
