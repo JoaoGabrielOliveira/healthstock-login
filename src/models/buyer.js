@@ -14,7 +14,7 @@ export default class Buyer extends BaseEntity {
 
 export const Schema = new EntitySchema({
     name: "Buyer",
-    tableName: "buyer",
+    tableName: "buyers",
     target: Buyer,
     columns: {
         id: {
@@ -28,8 +28,8 @@ export const Schema = new EntitySchema({
         cnpj: {
             type: "integer"
         },
-        },
         deliveryAddressId: {
             type: "varchar"
         }
-    })
+    }
+})

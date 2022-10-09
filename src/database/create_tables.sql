@@ -15,13 +15,24 @@ CREATE TABLE users (
 --DROP TABLE supplier
 
 --AUTOINCREMENT -> Sempre que criar um ID novo, ele vai dar um valor automaticamente
-
+DROP TABLE suppliers
 CREATE TABLE suppliers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_user INT NOT NULL,
     cnpj INT(14) NOT NULL,
     cnae INT(7) NOT NULL,
     Company_name VARCHAR(100) NOT NULL
+    FOREIGN KEY(id_user) REFERENCES users(id)
+)
+
+CREATE TABLE buyers (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    id_user INT NOT NULL,
+    cnpj INT(14) NOT NULL,
+    id_adress INT NOT NULL,
+    company_name VARCHAR(100) NOT NULL
+    FOREIGN KEY(id_user) REFERENCES users(id)
+    FOREIGN KEY(id_adress) REFERENCES addresses(id)
 )
 
 CREATE TABLE addresses (
@@ -29,13 +40,6 @@ CREATE TABLE addresses (
     cep INT(8) NOT NULL,
     number INT(10) NOT NULL,
     complement VARCHAR(100)
-)
-
-CREATE TABLE buyers (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    id_user INT NOT NULL,
-    cnpj INT(14) NOT NULL,
-    deliveryAddressId VARCHAR(100) NOT NULL,
 )
 
 CREATE TABLE contacts (
@@ -46,7 +50,7 @@ CREATE TABLE contacts (
 )
 
 -- Codigo para inserir um dado no banco
-INSERT INTO users (email, password) VALUES ('joao@gmail.com', '12345678')
+INSERT INTO users (email, password) VALUES ('joaog@gmail.com', '12345678')
 
 -- Codigo para ver todos dados da tabela users
 SELECT * FROM users;
