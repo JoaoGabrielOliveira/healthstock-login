@@ -25,7 +25,7 @@ CREATE TABLE suppliers (
     FOREIGN KEY(id_user) REFERENCES users(id)
 )
 
-CREATE TABLE buyes (
+CREATE TABLE buyers (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     id_user INT NOT NULL,
     cnpj INT(14) NOT NULL,
