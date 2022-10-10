@@ -27,3 +27,13 @@ export function StartDatabase(){
       console.error("Aconteceu um erro ao inciar banco de dados", error)
   }
 }
+
+export async function SendEvent(message, data, level = 'info'){
+  axios.post(env.LOG_ENDPOINT, {
+    "origin":'login',
+    "host":`${env.HOST}:${env.PORT}`,
+    "message":message,
+    "level":level,
+    "data": data
+})
+}

@@ -1,8 +1,7 @@
+import cors from 'cors';
 import express from "express";
 import "reflect-metadata";
-import cors from 'cors';
-
-import { StartDatabase, enviroment as env } from "./config/index.js";
+import { enviroment as env, SendEvent, StartDatabase } from "./config/index.js";
 import router from './routes.js';
 
 
@@ -14,6 +13,8 @@ app.use(cors({
     origin: '*'
 }));
 app.use(express.json());
+/** Log all request */
+app.use( (req, res, next) => SendEvent(`${req.method} ${req.url}`, {}).then( () => next()).catch( () => next()) );
 app.get('/', (req,res) => res.status(200).send({"message":"The service is working"}))
 app.use('/', router);
 
