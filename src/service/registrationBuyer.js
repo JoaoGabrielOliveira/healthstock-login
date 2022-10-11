@@ -1,7 +1,7 @@
-import Address from "./address.js";
-import Buyer from "./buyer.js";
-import Contact from "./contact.js";
-import User from "./user.js";
+import Address from '../models/address.js';
+import Buyer from '../models/buyer.js';
+import Contact from '../models/contact.js';
+import { SendEvent } from '../config/index.js';
 
 export async function getAllRegistrationBuyer(req, res) {
     let registrationBuyerBody = req.body;
@@ -16,77 +16,81 @@ export async function getAllRegistrationBuyer(req, res) {
 }
 
 export async function getRegistrationBuyer(req, res) {
-    let registrationBuyerBody = req.body;
-
     try{
-        let getAddress = registrationBuyerBody.getAddress;
-        let getBuyer = registrationBuyerBody.getBuyer;
-        let getContact = registrationBuyerBody.getContact;
+        SendEvent(`Iniciando Buyer ${req.params.id}!`, buyer);
+        let buyer = await Buyer.findOneBy({id: req.params.id});
+        
+        if(!buyer){
+            SendEvent(`Buyer ${req.params.id} não existe!`, buyer);
+            res.status(400).send({ message: `Buyer ${req.params.id} não existe!`});
+        }
+        else {
+            SendEvent(`Buyer ${req.params.id} foi retornando com sucesso!`, buyer);
+            res.status(200).send(buyer);
+        }
     }catch (error) {
-        res.status(500).send({message: "Campo não preenchido", error: error.message});
+        SendEvent("Erro ao registrar Buyer!", error, 'error');
+        res.status(500).send({message: "Comprador não pode ser cadastrado no momento!", error: error.message});
     } 
 }
 
 export async function saveRegistrationBuyer(req, res) {
     let registrationBuyerBody = req.body;
 
-    try{
-        let saveAddress = registrationBuyerBody.saveAddress;
-        let saveBuyer = registrationBuyerBody.saveBuyer;
-        let saveContact = registrationBuyerBody.saveContact;
-    }catch (error) {
-        res.status(500).send({message: "Campo não preenchido", error: error.message});
-    } 
-}
+    /*BODY PARA REQUISIÇÃO
+    {
+    "idUser": 1,
+    "cnpj": "08570770",
+    "cnae": "1234",
+    "companyName": "Nome - Materias",
+    "address":{
+        "cep": "08570731",
+        "number": 731,
+        "complement": ""
+    },
+    "contact": {
+        "responsibleArea":"Área de Vendas",
+        "name": "Fernanda",
+        "details": "11-999999999"
+    }
+}   */
 
-export async function deleteRegistrationBuyer(req, res, next) {
-    let registrationBuyerBody = req.body;
-    
     try{
-        let deleteAddress = registrationBuyerBody.deleteAddress;
-        let deleteBuyer = registrationBuyerBody.deleteBuyer;
-        let deleteContact = registrationBuyerBody.deleteContact;
+        SendEvent("Iniciando registro de Buyer", registrationBuyerBody);
+        let saveAddress = new Address(registrationBuyerBody.address);
+        let saveContact = new Contact(registrationBuyerBody.contact);
+        let saveBuyer = new Buyer(registrationBuyerBody);
+        
+        await saveAddress.save();
+        await saveContact.save();
+
+        saveBuyer.addressId = saveAddress.id;
+        saveBuyer.contactId = saveContact.id;
+        
+        await saveBuyer.save();
+        SendEvent("Buyer é registrado com sucesso!", saveBuyer);
+        res.status(201).send(saveBuyer);
     }catch (error) {
+        SendEvent("Erro ao registrar Buyer!", registrationBuyerBody, 'error');
         res.status(500).send({message: "Campo não preenchido", error: error.message});
     } 
 }
 
 export async function updateRegistrationBuyer(req, res, next) {
-    let registrationBuyerBody = req.body;
-
+    /**
+     * @type { {id:Number, cnae:string, cnpj:string, companyName:string} }
+     */
+    const registrationBuyerBody = req.body;
+    SendEvent("Iniciando atualização de Buyer", registrationBuyerBody);
     try{
-        let updateAddress = registrationBuyerBody.updateAddress;
-        let updateBuyer = registrationBuyerBody.updateBuyer;
-        let updateContact = registrationBuyerBody.updateContact;
+        let buyer = new Buyer(registrationBuyerBody);
+        await buyer.save();
+        SendEvent("Buyer atualizado com sucesso!", registrationBuyerBody);
+        res.status(201).send(buyer);
     }catch (error) {
+        SendEvent("Erro ao atualizar Buyer!", registrationBuyerBody, 'error');
         res.status(500).send({message: "Campo não preenchido", error: error.message});
-     
-}
-
-
-
-// export default async function RegistrationBuyer(req, res, next) {
-
-//     let registrationBuyerBody = req.body;
-
-    //Cadastro para Compradores
-    //     let cnpj = registrationBuyerBody.cnpj;
-    //     let idUser = registrationBuyerBody.idUser;
-    //     let id = registrationBuyerBody.id;
-
-    //     let cep = registrationBuyerBody.cep;
-    //     let number = registrationBuyerBody.number;
-    //     let complement = registrationBuyerBody.complement;
-
-    //     let responsibleArea = registrationBuyerBody.responsibleArea;
-    //     let name = registrationBuyerBody.name;
-    //     let details = registrationBuyerBody.details;
-
-    //     try{
-    //     if ((cnpj.value, id.value, idUser.value, cep.value, number.value, complement.value, responsibleArea.value, name.value, details.value) != "") {
-    //         alert('Obrigado ' + id.value + ' os seus dados foram encaminhados com sucesso');
-    //     }
-    //     } catch (err) {
-    //         res.status(500).send({message: "Campo não preenchido", error: err.message});
-    // }
+    } finally {
+        next();
+    }
 }
