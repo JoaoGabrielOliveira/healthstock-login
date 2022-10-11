@@ -2,7 +2,7 @@ import { BaseEntity, EntitySchema } from "typeorm";
 
 
 export default class Supplier extends BaseEntity {
-    id; idUser; cnpj; cnae; companyName;
+    id; idUser; cnpj; cnae; companyName; addressId; contactId;
 
     constructor(idUser, cnpj, cnae,companyName){
         super();
