@@ -19,7 +19,7 @@ export async function getRegistrationSupplier(req, res) {
     try{
         SendEvent(`Iniciando Supplier ${req.params.id}!`, supplier);
         let supplier = await Supplier.findOneBy({id: req.params.id});
-        
+
         if(!supplier){
             SendEvent(`Supplier ${req.params.id} não existe!`, supplier);
             res.status(400).send({ message: `Supplier ${req.params.id} não existe!`});
@@ -72,7 +72,7 @@ export async function saveRegistrationSupplier(req, res) {
         res.status(201).send(saveSupplier);
     }catch (error) {
         SendEvent("Erro ao registrar Supplier!", registrationSupplierBody, 'error');
-        res.status(500).send({message: "Campo não preenchido", error: error.message});
+        res.status(500).send({message: "Fornecedor não pode ser cadastrado!", error: error.message});
     } 
 }
 
