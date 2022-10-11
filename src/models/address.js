@@ -2,7 +2,15 @@ import { BaseEntity, EntitySchema } from "typeorm";
 
 
 export default class Address extends BaseEntity {
-    id; cep; number; complement
+    id; cep; number; complement;
+
+    constructor(body){
+        super();
+        this.id = body?.id;
+        this.cep = body?.cep;
+        this.number = body?.number;
+        this.complement = body?.complement;
+    }
 }
 
 export const Schema = new EntitySchema({
@@ -16,7 +24,7 @@ export const Schema = new EntitySchema({
             generated: true
         },
         cep: {
-            type: "integer"
+            type: "varchar", nullable: false
         },
         number: {
             type: "integer"

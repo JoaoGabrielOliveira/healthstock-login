@@ -3,6 +3,14 @@ import { BaseEntity, EntitySchema } from "typeorm";
 
 export default class Contact extends BaseEntity {
     id; responsibleArea; name; details;
+
+    constructor(body){
+        super();
+        this.id = body?.id;
+        this.responsibleArea = body?.responsibleArea;
+        this.name = body?.name;
+        this.details = body?.details;
+    }
 }
 
 export const Schema = new EntitySchema({
