@@ -1,6 +1,7 @@
 import typeorm from 'typeorm';
 import fs from 'fs';
 import env from './env.js';
+import axios from 'axios';
 
 export const enviroment = env;
 
@@ -35,5 +36,7 @@ export async function SendEvent(message, data, level = 'info'){
     "message":message,
     "level":level,
     "data": data
-})
+}).catch(err => {
+  console.log("Serviço de eventos está fora do ar!", err);
+ })
 }
