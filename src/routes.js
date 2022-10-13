@@ -2,6 +2,8 @@ import express from 'express';
 
 import Login from './service/login.js';
 import { getUser, getAllUser, deleteUser, saveUser, updateUser } from "./service/user.js";
+import { getRegistrationBuyer, getAllRegistrationBuyer, saveRegistrationBuyer, updateRegistrationBuyer } from "./service/registrationBuyer.js";
+import { getRegistrationSupplier, getAllRegistrationSupplier, saveRegistrationSupplier, updateRegistrationSupplier } from "./service/registrationSupplier.js";
 
 const router = express.Router();
 
