@@ -2,8 +2,6 @@ import cors from 'cors';
 import express from "express";
 
 import "reflect-metadata";
-import { getRegistrationBuyer, getAllRegistrationBuyer, saveRegistrationBuyer, updateRegistrationBuyer } from "./service/registrationBuyer.js";
-import { getRegistrationSupplier, getAllRegistrationSupplier, saveRegistrationSupplier, updateRegistrationSupplier } from "./service/registrationSupplier.js";
 
 import "reflect-metadata";
 import { enviroment as env, SendEvent, StartDatabase } from "./config/index.js";
