@@ -34,5 +34,26 @@ export const Schema = new EntitySchema({
         cnpj: {
             type: "varchar"
         }
+    },
+    relations: {
+
+        address: {
+            type: 'one-to-many',
+            target: 'Address',
+            joinColumn: {
+                name: 'addressId'
+            },
+            nullable: false,
+            createForeignKeyConstraints: true
+        },
+        contact: {
+            type: 'one-to-many',
+            target: 'Contact',
+            joinColumn: {
+                name: 'contactId'
+            },
+            nullable: false,
+            createForeignKeyConstraints: true
+        }
     }
 })
