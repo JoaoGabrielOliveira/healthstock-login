@@ -40,7 +40,13 @@ export default async function Login(req, res, next) {
 
         let userType = await checkTypeOfUser(user.id);
 
+        if(!userType){
+            res.status(401).send({message: "Usuario não está com dados completos.Usuários não tem dados informando se é Comprador ou Fornecedor"});
+            return;
+        }
+
         userType.userType.user = user;
+
 
         res.status(202).send(userType);
     } catch (err) {
@@ -58,17 +64,17 @@ async function checkPassword(plainPassword, hashPassword){
 }
 
 async function checkTypeOfUser(userId){
-    let userType = await Supplier.findOneBy({idUser: userId});
+    let userType = await Supplier.findOneBy({user: {id: userId}});
 
     if(userType){
         return {type: "supplier", userType};
     }
 
-    userType = await Buyer.findOneBy({idUser: userId});
+    userType = await Buyer.findOneBy({ user: {id: userId}});
 
     if(userType){
         return {type: "buyer", userType};
     }
 
-    throw Error("Usuario não está com dados completos.\nUsuários não tem dados informando se é Comprador ou Fornecedor");
+    return undefined;
 }

@@ -2,16 +2,16 @@ import { BaseEntity, EntitySchema } from "typeorm";
 
 
 export default class Buyer extends BaseEntity {
-    id; idUser; cnpj; companyName;
+    id; cnpj; companyName;
     //Campos que são chave estrangeira
-    addressId; contactId;
+    user; address; contact;
 
     constructor(body){
         super();
-        this.idUser = body?.idUser;
+        this.user = body?.idUser;
         this.cnpj = body?.cnpj;
-        this.addressId = body?.addressId;
-        this.contactId = body?.contactId;
+        this.address = body?.address;
+        this.contact = body?.contact;
         this.companyName = body?.companyName;
     }
 }
@@ -26,34 +26,37 @@ export const Schema = new EntitySchema({
             type: "integer",
             generated: true
         },
-        idUser: {
-            type: "integer",
-            unique: true,
-            nullable: false
-        },
         cnpj: {
-            type: "varchar"
+            type: "varchar",
+            nullable: false,
+            unique: true
+        },
+        companyName: {
+            type: "varchar",
+            nullable: false
         }
     },
     relations: {
-
         address: {
             type: 'one-to-many',
             target: 'Address',
             joinColumn: {
                 name: 'addressId'
-            },
-            nullable: false,
-            createForeignKeyConstraints: true
+            }
         },
         contact: {
             type: 'one-to-many',
             target: 'Contact',
             joinColumn: {
                 name: 'contactId'
-            },
-            nullable: false,
-            createForeignKeyConstraints: true
-        }
+            }
+        },
+        user: {
+            type: 'one-to-one',
+            target: 'User',
+            joinColumn: {
+                name: 'userId'
+            }
+        },
     }
 })

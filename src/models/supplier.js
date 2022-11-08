@@ -2,16 +2,17 @@ import { BaseEntity, EntitySchema } from "typeorm";
 
 
 export default class Supplier extends BaseEntity {
-    id; idUser; cnpj; cnae; companyName; addressId; contactId;
+    id; user; cnpj; cnae; companyName;
+    address; contact;
 
     constructor(body){
         super();
-        this.idUser = body?.idUser;
+        this.user = body?.idUser;
         this.cnpj = body?.cnpj;
         this.cnae = body?.cnae;
         this.companyName = body?.companyName;
-        this.addressId = body?.address.id;
-        this.contactId = body?.contact.id;
+        this.address = body?.address;
+        this.contact = body?.contact;
     }
 }
 
@@ -25,17 +26,18 @@ export const Schema = new EntitySchema({
             type: "integer",
             generated: true
         },
-        idUser: {
-            type: "integer"
-        },
         cnpj: {
-            type: "integer"
+            type: "integer",
+            nullable: false,
+            unique: true
         },
         cnae: {
-            type: "integer"
+            type: "integer",
+            nullable: false
         },
         companyName: {
-            type: "varchar"
+            type: "varchar",
+            nullable: false,
         }
     },
     relations: {
@@ -52,6 +54,13 @@ export const Schema = new EntitySchema({
             joinColumn: {
                 name: 'contactId'
             }
-        }
+        },
+        user: {
+            type: 'one-to-one',
+            target: 'User',
+            joinColumn: {
+                name: 'userId'
+            }
+        },
     }
 })
