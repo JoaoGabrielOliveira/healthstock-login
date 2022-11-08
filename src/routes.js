@@ -2,7 +2,7 @@ import express from 'express';
 
 import Login from './service/login.js';
 import { getUser, getAllUser, deleteUser, saveUser, updateUser } from "./service/user.js";
-import { getRegistrationBuyer, getAllRegistrationBuyer, saveRegistrationBuyer, updateRegistrationBuyer } from "./service/registrationBuyer.js";
+import { saveRegistrationBuyer, updateRegistrationBuyer } from "./service/registrationBuyer.js";
 import { getRegistrationSupplier, getAllRegistrationSupplier, saveRegistrationSupplier, updateRegistrationSupplier } from "./service/registrationSupplier.js";
 
 const router = express.Router();
@@ -17,8 +17,6 @@ router.delete("/users/:id", deleteUser );
 
 
 router.post("/cadastro/comprador", saveRegistrationBuyer);
-router.get("/cadastro/comprador", getAllRegistrationBuyer);
-router.get("/cadastro/:id/comprador", getRegistrationBuyer);
 router.put("/cadastro/comprador", updateRegistrationBuyer);
 
 router.post("/cadastro/fornecedor", saveRegistrationSupplier);
