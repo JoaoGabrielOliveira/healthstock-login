@@ -1,9 +1,8 @@
 import { BaseEntity, EntitySchema } from "typeorm";
 
-
 export default class Supplier extends BaseEntity {
     id; user; cnpj; cnae; companyName;
-    address; contact;
+    addresses; contacts;
 
     constructor(body){
         super();
@@ -11,8 +10,8 @@ export default class Supplier extends BaseEntity {
         this.cnpj = body?.cnpj;
         this.cnae = body?.cnae;
         this.companyName = body?.companyName;
-        this.address = body?.address;
-        this.contact = body?.contact;
+        this.addresses = body?.addresses;
+        this.contacts = body?.contacts;
     }
 }
 
@@ -41,14 +40,14 @@ export const Schema = new EntitySchema({
         }
     },
     relations: {
-        address: {
+        addresses: {
             type: 'one-to-many',
             target: 'Address',
             joinColumn: {
                 name: 'addressId'
             }
         },
-        contact: {
+        contacts: {
             type: 'one-to-many',
             target: 'Contact',
             joinColumn: {
