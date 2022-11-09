@@ -24,22 +24,14 @@ export async function saveRegistrationBuyer(req, res) {
     let registrationBuyerBody = req.body;
 
     try{
-        SendEvent("Iniciando registro de Buyer", registrationBuyerBody);
-        let saveAddress = new Address(registrationBuyerBody.address);
-        let saveContact = new Contact(registrationBuyerBody.contact);
+        SendEvent("Iniciando registro de Comprador", registrationBuyerBody);
         let saveBuyer = new Buyer(registrationBuyerBody);
         
-        await saveAddress.save();
-        await saveContact.save();
-
-        saveBuyer.addressId = saveAddress.id;
-        saveBuyer.contactId = saveContact.id;
-        
         await saveBuyer.save();
-        SendEvent("Buyer é registrado com sucesso!", saveBuyer);
+        SendEvent("Comprador é registrado com sucesso!", saveBuyer);
         res.status(201).send(saveBuyer);
     }catch (error) {
-        SendEvent("Erro ao registrar Buyer!", registrationBuyerBody, 'error');
+        SendEvent("Erro ao registrar Comprador!", registrationBuyerBody, 'error');
         res.status(500).send({message: "Campo não preenchido", error: error.message});
     } 
 }
