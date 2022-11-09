@@ -41,7 +41,7 @@ export default async function Login(req, res, next) {
         let userType = await checkTypeOfUser(user.id);
 
         if(!userType){
-            res.status(401).send({message: "Usuario não está com dados completos.Usuários não tem dados informando se é Comprador ou Fornecedor"});
+            res.status(401).send({error: "Usuario não está com dados completos.Usuários não tem dados informando se é Comprador ou Fornecedor"});
             return;
         }
 
