@@ -44,7 +44,8 @@ export async function updateRegistrationSupplier(req, res, next) {
     SendEvent("Iniciando atualização de Supplier", registrationSupplierBody);
     try{
         let supplier = new Supplier(registrationSupplierBody);
-        await supplier.save();
+        // await supplier.save();
+        await Supplier.update(supplier);
         SendEvent("Supplier atualizado com sucesso!", registrationSupplierBody);
         res.status(201).send(supplier);
     }catch (error) {

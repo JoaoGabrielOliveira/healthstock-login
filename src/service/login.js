@@ -64,7 +64,7 @@ async function checkPassword(plainPassword, hashPassword){
 }
 
 async function checkTypeOfUser(userId){
-    let userType = await Supplier.findOneBy({user: {id: userId}});
+    let userType = await Supplier.findOne({where: {user: {id: userId}}, relations: {addresses: true, contacts: true}});
 
     if(userType){
         return {type: "supplier", userType};

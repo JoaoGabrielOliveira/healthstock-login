@@ -30,6 +30,7 @@ export function StartDatabase(){
 }
 
 export async function SendEvent(message, data, level = 'info'){
+  console.log(level, message)
   axios.post(env.LOG_ENDPOINT, {
     "origin":'login',
     "host":`${env.HOST}:${env.PORT}`,

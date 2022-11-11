@@ -32,5 +32,14 @@ export const Schema = new EntitySchema({
         complement: {
             type: "varchar"
         }
+    },
+    relations: {
+        supplier: {
+            type: 'many-to-one',
+            target: 'Supplier',
+            joinColumn: {
+                name: 'supplierId'
+            }
+        },
     }
 })
