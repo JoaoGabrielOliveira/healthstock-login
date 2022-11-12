@@ -61,5 +61,13 @@ export const Schema = new EntitySchema({
                 name: 'userId'
             }
         },
+        addresses: {
+            type: 'one-to-many',
+            target: 'Address'
+        },
+        contacts: {
+            type: 'one-to-many',
+            target: 'Contact'
+        }
     }
 })

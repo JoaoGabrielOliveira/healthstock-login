@@ -2,7 +2,7 @@ import { BaseEntity, EntitySchema } from "typeorm";
 
 
 export default class Address extends BaseEntity {
-    id; cep; number; complement;
+    id; cep; number; complement; supplier; buyer;
 
     constructor(body){
         super();
@@ -10,6 +10,8 @@ export default class Address extends BaseEntity {
         this.cep = body?.cep;
         this.number = body?.number;
         this.complement = body?.complement;
+        this.buyer = body?.buyer;
+        this.supplier = body?.supplier;
     }
 }
 
@@ -31,6 +33,24 @@ export const Schema = new EntitySchema({
         },
         complement: {
             type: "varchar"
+        }
+    },
+    relations: {
+        supplier: {
+            type: 'many-to-one',
+            target: 'Supplier',
+            joinColumn: {
+                name: 'supplierId'
+            },
+            nullable: true
+        },
+        buyer: {
+            type: 'many-to-one',
+            target: 'Buyer',
+            joinColumn: {
+                name: 'buyerId'
+            },
+            nullable: true
         }
     }
 })
