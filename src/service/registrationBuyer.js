@@ -26,12 +26,25 @@ export async function saveRegistrationBuyer(req, res) {
     try{
         SendEvent("Iniciando registro de Comprador", registrationBuyerBody);
         let saveBuyer = new Buyer(registrationBuyerBody);
+
+        let contacts = saveBuyer.contacts;
+        let addresses = saveBuyer.addresses;
+
+        delete saveBuyer.contacts;
+        delete saveBuyer.addresses;
         
         await saveBuyer.save();
+
+        const contactsWithId = contacts.map(contact => new Contact({...contact, buyer: saveBuyer.id}))
+        const addressesWithId = addresses.map(address => new Address({...address, buyer: saveBuyer.id}))
+
+        contactsWithId.forEach( async contact =>  await contact.save() );
+        addressesWithId.forEach( async address => await address.save() );
+
         SendEvent("Comprador é registrado com sucesso!", saveBuyer);
         res.status(201).send(saveBuyer);
     }catch (error) {
-        SendEvent("Erro ao registrar Comprador!", registrationBuyerBody, 'error');
+        SendEvent("Erro ao registrar Comprador!", [registrationBuyerBody, error], 'error');
         res.status(500).send({message: "Campo não preenchido", error: error.message});
     } 
 }
@@ -43,12 +56,26 @@ export async function updateRegistrationBuyer(req, res, next) {
     const registrationBuyerBody = req.body;
     SendEvent("Iniciando atualização de Buyer", registrationBuyerBody);
     try{
-        let buyer = new Buyer(registrationBuyerBody);
-        await buyer.save();
+        let saveBuyer = new Buyer(registrationBuyerBody);
+
+        let contacts = saveBuyer.contacts;
+        let addresses = saveBuyer.addresses;
+
+        delete saveBuyer.contacts;
+        delete saveBuyer.addresses;
+        
+        await saveBuyer.save();
+
+        const contactsWithId = contacts.map(contact => new Contact({...contact, buyer: saveBuyer.id}))
+        const addressesWithId = addresses.map(address => new Address({...address, buyer: saveBuyer.id}))
+
+        contactsWithId.forEach( async contact =>  await contact.save() );
+        addressesWithId.forEach( async address => await address.save() );
+
         SendEvent("Buyer atualizado com sucesso!", registrationBuyerBody);
-        res.status(201).send(buyer);
+        res.status(201).send(saveBuyer);
     }catch (error) {
-        SendEvent("Erro ao atualizar Buyer!", registrationBuyerBody, 'error');
+        SendEvent("Erro ao atualizar Buyer!", [registrationBuyerBody, error], 'error');
         res.status(500).send({message: "Campo não preenchido", error: error.message});
     } finally {
         next();
