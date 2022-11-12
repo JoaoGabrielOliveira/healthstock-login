@@ -42,17 +42,11 @@ export const Schema = new EntitySchema({
     relations: {
         addresses: {
             type: 'one-to-many',
-            target: 'Address',
-            joinColumn: {
-                name: 'addressId'
-            }
+            target: 'Address'
         },
         contacts: {
             type: 'one-to-many',
-            target: 'Contact',
-            joinColumn: {
-                name: 'contactId'
-            }
+            target: 'Contact'
         },
         user: {
             type: 'one-to-one',
@@ -60,14 +54,6 @@ export const Schema = new EntitySchema({
             joinColumn: {
                 name: 'userId'
             }
-        },
-        addresses: {
-            type: 'one-to-many',
-            target: 'Address'
-        },
-        contacts: {
-            type: 'one-to-many',
-            target: 'Contact'
         }
     }
 })
