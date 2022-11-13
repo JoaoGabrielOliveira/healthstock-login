@@ -5,6 +5,7 @@ import Contact from '../models/contact.js';
 import Address from '../models/Address.js';
 
 import { IsNull } from 'typeorm';
+import bcrypt from 'bcrypt';
 
 import { SendEvent } from '../config/index.js';
 
@@ -75,7 +76,7 @@ export default async function Login(req, res, next) {
 }
 
 async function checkPassword(plainPassword, hashPassword){
-    //return bcrypt.compare(plainPassword, hashPassword);
+    return bcrypt.compare(plainPassword, hashPassword);
 
     return plainPassword == hashPassword;
 }
@@ -85,12 +86,10 @@ async function checkTypeOfUser(userId){
 
     let userType = await Supplier.findOne({where: where});
 
-    Address.getRepository().count();
-
     if(userType){
         userType.contacts = await Contact.findBy({supplier: {id: userType.id}, buyer: IsNull()});
         
-        userType.addresses = await Address.findBy({supplier: {id: userType.id}, buyer: IsNull()});
+        //userType.addresses = await Address.findBy({supplier: {id: userType.id}, buyer: IsNull()});
 
         return {type: "supplier", userType};
     }
@@ -99,7 +98,7 @@ async function checkTypeOfUser(userId){
 
     if(userType){
         userType.contacts = await Contact.findBy({buyer: {id: userType.id}, supplier: IsNull()});
-        userType.addresses = await Address.findBy({buyer: {id: userType.id}, supplier: IsNull()});
+        //userType.addresses = await Address.findBy({buyer: {id: userType.id}, supplier: IsNull()});
 
         return {type: "buyer", userType};
     }

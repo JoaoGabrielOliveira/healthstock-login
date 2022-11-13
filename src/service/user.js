@@ -1,4 +1,6 @@
 import User from "../models/user.js";
+import bcrypt from 'bcrypt';
+import {enviroment} from '../config/index.js';
 
 export async function getAllUser(req, res) {
     try {
@@ -22,12 +24,17 @@ export async function saveUser(req, res) {
     try {
         const userRequest = req.body;
         let user = new User();
-
+        
+        const salt = await bcrypt.genSalt(enviroment.SALT_ROUNDS);
+        user.password = await bcrypt.hash(userRequest.password, salt);
         user.email = userRequest.email;
-        user.password = userRequest.password;
 
-        await user.save();
-        res.status(200).send(user);
+        user = await user.save();
+        if(user){
+            delete user.password;
+            res.status(201).send(user)
+        }
+        
     } catch (error) {
         res.status(500).send({message: "Aconteceu um erro inesperado", error: error.message});
     }
