@@ -67,8 +67,8 @@ export async function updateRegistrationSupplier(req, res, next) {
 
         await supplier.save();
 
-        const contactsWithId = contacts.map(contact => new Contact({...contact, supplier: saveSupplier.id}))
-        const addressesWithId = addresses.map(address => new Address({...address, supplier: saveSupplier.id}))
+        const contactsWithId = contacts.map(contact => new Contact({...contact, supplier: supplier.id}))
+        const addressesWithId = addresses.map(address => new Address({...address, supplier: supplier.id}))
 
         contactsWithId.forEach( async contact =>  await contact.save() );
         addressesWithId.forEach( async address => await address.save() );
