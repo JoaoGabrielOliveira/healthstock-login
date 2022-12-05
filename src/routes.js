@@ -1,7 +1,7 @@
 import express from 'express';
 
 import Login from './service/login.js';
-import { getUser, getAllUser, deleteUser, saveUser, updateUser } from "./service/user.js";
+import { getUser, getAllUser, deleteUser, saveUser, updateUser, sendEmail } from "./service/user.js";
 import { saveRegistrationBuyer, updateRegistrationBuyer } from "./service/registrationBuyer.js";
 import { saveRegistrationSupplier, updateRegistrationSupplier } from "./service/registrationSupplier.js";
 
@@ -21,5 +21,7 @@ router.put("/cadastro/comprador", updateRegistrationBuyer);
 
 router.post("/cadastro/fornecedor", saveRegistrationSupplier);
 router.put("/cadastro/fornecedor", updateRegistrationSupplier);
+
+router.post("/sendEmail", sendEmail)
 
 export default router;

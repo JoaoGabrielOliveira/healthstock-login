@@ -45,8 +45,10 @@ export async function SendEvent(message, data, level = 'info'){
 
 export const transporter = nodemailer.createTransport({
   service: enviroment.EMAIL_SERVICE,
+  port: 587,
+  secure: true, // true for 465, false for other ports
   auth: {
-    user: enviroment.EMAIL_ADDRESS,
-    pass: enviroment.EMAIL_PASS
-  }
+      user: enviroment.EMAIL_ADDRESS, // generated ethereal user
+      pass: enviroment.EMAIL_PASS, // generated ethereal password
+  },
 });
