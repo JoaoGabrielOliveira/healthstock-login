@@ -2,6 +2,7 @@ import typeorm from 'typeorm';
 import fs from 'fs';
 import env from './env.js';
 import axios from 'axios';
+import nodemailer from 'nodemailer';
 
 export const enviroment = env;
 
@@ -41,3 +42,11 @@ export async function SendEvent(message, data, level = 'info'){
   console.log("Serviço de eventos está fora do ar!", err);
  })
 }
+
+export const transporter = nodemailer.createTransport({
+  service: enviroment.EMAIL_SERVICE,
+  auth: {
+    user: enviroment.EMAIL_ADDRESS,
+    pass: enviroment.EMAIL_PASS
+  }
+});
